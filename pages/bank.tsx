@@ -10,7 +10,6 @@ import {
   useWriteContract,
   usePrepareTransactionRequest,
   useSendTransaction,
-  writeContractAsync,
 } from "wagmi";
 import { Button, Alert, Input, Spin, Tabs, InputNumber, message } from "antd";
 import "../abi/IERC20.json";
@@ -19,6 +18,7 @@ import type { TabsProps } from "antd";
 import { parseEther, formatEther } from "ethers";
 import moment from "moment";
 import { Address } from "@ant-design/web3";
+import React from "react";
 
 
 const contract = {

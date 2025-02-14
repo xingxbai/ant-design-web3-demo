@@ -1,6 +1,9 @@
+// eslint-disabled
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
 
 export default function Navigation() {
   const [pages, setPages] = useState([]);
@@ -41,19 +44,25 @@ export default function Navigation() {
         </li>
         {pages.map((page) => (
           <li
-            key={page.path}
+            key={(page as { path: string }).path}
             style={{
               marginRight: "20px",
-              color: router.pathname === page.path ? "#1677ff" : "inherit",
+              color:
+                router.pathname === (page as { path: string }).path
+                  ? "#1677ff"
+                  : "inherit",
             }}
           >
             <Link
-              href={page.path}
+              href={(page as { path: string }).path}
               style={{
-                color: router.pathname === page.path ? "#1677ff" : "inherit",
+                color:
+                  router.pathname === (page as { path: string }).path
+                    ? "#1677ff"
+                    : "inherit",
               }}
             >
-              {page.name}
+              {(page as { name: string }).name}
             </Link>
           </li>
         ))}
