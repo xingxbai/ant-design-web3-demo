@@ -25,17 +25,14 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Install SSH key
-      uses: shimataro/ssh-key-action@v2
-      with:
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        known_hosts: unnecessary
-        if_key_exists: replace
-
-    - name: Adding Known Hosts
-      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -p 22 112.72.119.81 >> ~/.ssh/known_hosts
 
     - name: Deploy to Server
       run: |
-        rsync -avz --delete .next node_modules package.json package-lock.json ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}
-        ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && pm2 restart web3-demo || pm2 start npm --name web3-demo -- start"
+        rsync -avz --delete .next node_modules package.json package-lock.json ${{ secrets.SSH_USERNAME }}@112.72.119.81:/web3/ant-design-web3-demo
+        ssh ${{ secrets.SSH_USERNAME }}@112.72.119.81 "cd /web3/ant-design-web3-demo && pm2 restart web3-demo || pm2 start npm --name web3-demo -- start"
