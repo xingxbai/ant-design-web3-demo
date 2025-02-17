@@ -40,8 +40,8 @@ jobs:
           node_modules \
           package.json \
           package-lock.json \
-          ${{ secrets.SSH_USERNAME }}@112.72.119.81:/web3/ant-design-web3-demo
+          ${{ secrets.SSH_USERNAME }}@112.72.119.181:/web3/ant-design-web3-demo
 
     - name: Start Application
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@112.72.119.81 "cd /web3/ant-design-web3-demo && pm2 restart web3-demo || pm2 start npm --name web3-demo -- start"
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@112.72.119.181 "cd /web3/ant-design-web3-demo && pm2 restart web3-demo || pm2 start npm --name web3-demo -- start"
