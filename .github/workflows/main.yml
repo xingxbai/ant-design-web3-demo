@@ -33,20 +33,9 @@ jobs:
         known_hosts: unnecessary
         if_key_exists: replace
 
-    - name: Adding Known Hosts
-      run: |
-        mkdir -p ~/.ssh
-        touch ~/.ssh/known_hosts
-        ssh-keyscan -H -p 22 112.72.119.81 >> ~/.ssh/known_hosts
-        chmod 644 ~/.ssh/known_hosts
-
-    - name: Test SSH Connection
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@112.72.119.81 "echo 'Connection test successful'"
-
     - name: Deploy with rsync
       run: |
-        rsync -avz --delete \
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no" --delete \
           .next \
           node_modules \
           package.json \
@@ -55,4 +44,4 @@ jobs:
 
     - name: Start Application
       run: |
-        ssh ${{ secrets.SSH_USERNAME }}@112.72.119.81 "cd /web3/ant-design-web3-demo && pm2 restart web3-demo || pm2 start npm --name web3-demo -- start"
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@112.72.119.81 "cd /web3/ant-design-web3-demo && pm2 restart web3-demo || pm2 start npm --name web3-demo -- start"
