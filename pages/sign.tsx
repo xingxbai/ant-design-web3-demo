@@ -1,7 +1,7 @@
 import React from "react";
 import { MetaMask, WagmiWeb3ConfigProvider } from "@ant-design/web3-wagmi";
 import { createConfig, http } from "wagmi";
-import { injected } from "wagmi/connectors";
+import { injected, walletConnect } from "wagmi/connectors";
 import { mainnet, sepolia } from "wagmi/chains";
 import { SignDemo } from "../components/SignDemo";
 
@@ -14,6 +14,10 @@ const config = createConfig({
   connectors: [
     injected({
       target: "metaMask",
+    }),
+    walletConnect({
+      projectId: "c07c0051c2055890eade3556618e38a6",
+      showQrModal: true,
     }),
   ],
 });

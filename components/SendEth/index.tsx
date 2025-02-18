@@ -20,7 +20,6 @@ export const SendEth: React.FC = () => {
     sendTransaction,
     ...obj
   } = useSendTransaction();
-  console.log(2222, obj)
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({ hash });
 

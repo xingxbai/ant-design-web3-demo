@@ -9,16 +9,16 @@ export const SignDemo: React.FC = () => {
   const [signLoading, setSignLoading] = useState(false);
 
   const doSignature = async () => {
-    setSignLoading(true);
+    await setSignLoading(true);
     try {
       const res = await signMessageAsync({
         message: "test message for WTF-DApp demo",
       });
-      checkSignature({address: account?.address, signature: res})
+      await checkSignature({address: account?.address, signature: res})
     } catch (error) {
       console.error("rd ~ doSignature ~ error:", error)
     }
-    setSignLoading(false);
+    await setSignLoading(false);
   }
   const checkSignature = async (params: {
     address?: string,
