@@ -21,7 +21,6 @@ export default function Balance(props: Props) {
       refetchInterval: 3000,
     },
   });
-  console.log("rd ~ Balance ~ tokenAddress:", tokenAddress, props, balance);
 
   return balance === undefined ? (
     "-"

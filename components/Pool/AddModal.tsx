@@ -28,7 +28,6 @@ export default function AddModal(props: AddModalProps) {
         sqrtPriceX96: parsePriceToSqrtPriceX96(values.price),
       });
       setLoading(false);
-      console.log("rd ~ handleOk ~ values:", values);
     }).catch((error) => {
       console.error("rd ~ error:", error);
     })
@@ -49,8 +48,8 @@ export default function AddModal(props: AddModalProps) {
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 19 }}
         initialValues={{
-          token0: getContractAddress("DebugTokenA"),
-          token1: getContractAddress("DebugTokenB"),
+          token0: getContractAddress("DebugTokenC"),
+          token1: getContractAddress("DebugTokenA"),
           fee: 3000,
           tickLower: -887272,
           tickUpper: 887272,

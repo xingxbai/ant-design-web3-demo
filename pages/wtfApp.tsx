@@ -3,7 +3,7 @@ import { Tabs, Typography } from "antd";
 import type { TabsProps } from "antd";
 import Pool from '../components/Pool';
 import Faucet from '../components/Faucet'
-
+import Swap from '../components/Swap'
 const items: TabsProps["items"] = [
   {
     key: "faucet",
@@ -13,7 +13,7 @@ const items: TabsProps["items"] = [
   {
     key: "swap",
     label: "2.Swap",
-    children: <Pool></Pool>,
+    children: <Swap></Swap>,
   },
   {
     key: "pool",
@@ -23,7 +23,7 @@ const items: TabsProps["items"] = [
 ];
 
 const WtfApp: React.FC = () => {
-  const [activeKey, setActiveKey] = useState("faucet");
+  const [activeKey, setActiveKey] = useState("swap");
   return (
     <div style={{ margin: "24px 148px" }}>
       <Typography.Title level={2}>{activeKey}</Typography.Title>

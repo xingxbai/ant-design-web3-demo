@@ -33,12 +33,17 @@ const config = createConfig({
 export const Faucet = () => {
   const { writeContractAsync } = useWriteDebugTokenMint();
   const { account } = useAccount();
+  // 获取所有的代币地址
   const { data: pairs = [] } = useReadPoolManagerGetPairs({
     address: getContractAddress("PoolManager"),
   });
-
-  const [tokenA, setTokenA] = useState<Token>();
+  // 用户可以选择的代币
   const [tokens, setTokens] = useState<Token[]>([]);
+
+  // 用户选择的两个代币
+  const [tokenA, setTokenA] = useState<Token>();
+  const [tokenB, setTokenB] = useState<Token>();
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -49,10 +54,9 @@ export const Faucet = () => {
           pair.token1,
         ])
         .flat(),
-    ).map(getTokenInfo);
+    ).map((val) => getTokenInfo(val as string));
     setTokenA(options[0]);
     setTokens(options);
-    console.log(444444, options);
   }, [pairs]);
   const claim = async (address: `0x${string}`, tokenName: string) => {
     setLoading(true);

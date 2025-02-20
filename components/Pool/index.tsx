@@ -12,7 +12,7 @@ const PoolListTable: React.FC = () => {
   const { writeContractAsync } =
     useWritePoolManagerCreateAndInitializePoolIfNecessary();
   
-  const { data: poolList = [], refetch, isLoading } = useReadPoolManagerGetAllPools({
+  const { data: poolList = [], refetch } = useReadPoolManagerGetAllPools({
     address: getContractAddress("PoolManager"),
   });
 
@@ -83,16 +83,23 @@ const PoolListTable: React.FC = () => {
       fixed: "right",
     },
   ];
+  const loadingFn = async (callback: Function) => {
+    setLoading(true);
+    await callback();
+    setLoading(false);
+  }
 
   return (
     <div>
       <Typography.Title level={2}>Pool</Typography.Title>
-      <div style={{ display: "flex", justifyContent: "right", marginBottom: 12 }}>
+      <div
+        style={{ display: "flex", justifyContent: "right", marginBottom: 12 }}
+      >
         <Button
           type="primary"
-          onClick={()=>refetch()}
+          onClick={() => loadingFn(()=>refetch())}
           style={{ marginRight: 14 }}
-          loading={isLoading || loading}
+          loading={loading}
         >
           Refresh
         </Button>
@@ -104,7 +111,7 @@ const PoolListTable: React.FC = () => {
       <Table
         columns={columns}
         dataSource={poolList}
-        loading={isLoading || loading}
+        loading={loading}
         scroll={{ x: "max-content" }}
         rowKey="pool"
       />
@@ -114,7 +121,7 @@ const PoolListTable: React.FC = () => {
         onCreatePool={async (createParams) => {
           setLoading(true);
           try {
-            await writeContractAsync({
+            const aaa = await writeContractAsync({
               address: getContractAddress("PoolManager"),
               args: [
                 {
@@ -127,10 +134,11 @@ const PoolListTable: React.FC = () => {
                 },
               ],
             });
+            console.log(111111, aaa);
             setAddModalVisible(false);
             refetch();
-          } catch (error) {
-            console.error("创建池子失败:", error);
+          } catch (error: any) {
+            console.error("创建池子失败:", error.message);
           } finally {
             setLoading(false);
           }
