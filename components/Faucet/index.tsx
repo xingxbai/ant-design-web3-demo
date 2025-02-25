@@ -42,7 +42,6 @@ export const Faucet = () => {
 
   // 用户选择的两个代币
   const [tokenA, setTokenA] = useState<Token>();
-  const [tokenB, setTokenB] = useState<Token>();
 
   const [loading, setLoading] = useState(false);
 
